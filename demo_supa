@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Mozaic | Karyawan Digital CV. Jenius Kreatifindo</title>
+<style>
+:root{
+  --bg:#0b0f14;
+  --card:#121923;
+  --card-hover:#16202c;
+  --line:#223044;
+  --tx:#e6edf3;
+  --mut:#8b9bb0;
+  --ac:#f5a524;
+  --ac-glow:rgba(245,165,36,0.18);
+  --ok:#34d399;
+  --bad:#f87171;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gradient(900px 500px at 50% -10%,#1b2638,var(--bg));background-color:var(--bg);color:var(--tx);line-height:1.6}
+section{max-width:960px;margin:0 auto;padding:52px 20px}
+h2{font-size:1.65rem;text-align:center;margin-bottom:8px}
+.sub{color:var(--mut);text-align:center;margin-bottom:30px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* hero */
+.hero{text-align:center;padding-top:72px}
+.avatar{width:92px;height:92px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;font-size:2.8rem;background:linear-gradient(135deg,var(--ac),#b45309);box-shadow:0 0 40px rgba(245,165,36,.35)}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);letter-spacing:-.02em}
+.hero h1 span{color:var(--ac)}
+.owner{color:var(--mut);font-size:.9rem;margin-top:4px}
+.badge{display:inline-block;margin:18px 0;padding:7px 16px;border:1px solid rgba(52,211,153,.4);border-radius:99px;color:var(--ok);background:rgba(52,211,153,.08);font-size:.9rem;animation:glow 2s infinite}
+@keyframes glow{50%{box-shadow:0 0 18px rgba(52,211,153,.45)}}
+.tag{max-width:640px;margin:0 auto;font-size:1.15rem;color:#c5d1df}
+
+/* problem solution */
+.chaos{border-color:rgba(248,113,113,.4)}
+.solve{border-color:rgba(52,211,153,.4)}
+.two h3{margin-bottom:12px}
+.chaos h3{color:var(--bad)}
+.solve h3{color:var(--ok)}
+.two ul{list-style:none}
+.two li{padding:9px 0 9px 26px;position:relative;border-top:1px solid var(--line);color:#c5d1df;font-size:.95rem}
+.chaos li:before{content:"✕";position:absolute;left:0;color:var(--bad)}
+.solve li:before{content:"✓";position:absolute;left:0;color:var(--ok)}
+.soon{color:var(--ac);font-size:.8rem}
+
+/* capabilities */
+.cap .ico{font-size:2rem;margin-bottom:10px}
+.cap h3{margin-bottom:6px}
+.cap p{color:var(--mut);font-size:.93rem}
+.chip{display:inline-block;margin:10px 6px 0 0;padding:2px 10px;border-radius:99px;border:1px solid var(--line);font-size:.75rem;color:var(--ac)}
+
+/* chat */
+.chat{max-width:680px;margin:0 auto;padding:0;overflow:hidden}
+.bar{padding:12px 18px;border-bottom:1px solid var(--line);color:var(--mut);font-size:.85rem}
+.box{height:340px;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:.92rem;animation:pop .3s ease}
+.me{align-self:flex-end;background:var(--ac);color:#1a1205;border-bottom-right-radius:4px}
+.ai{align-self:flex-start;background:#1c2736;border-bottom-left-radius:4px}
+.hint{margin:auto;color:var(--mut);font-size:.9rem;text-align:center}
+.typing span{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--mut);animation:bn 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bn{50%{transform:translateY(-5px);opacity:.4}}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.btns{display:flex;flex-wrap:wrap;gap:10px;padding:14px 18px;border-top:1px solid var(--line)}
+.btns button{flex:1 1 180px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#0f1620;color:var(--tx);cursor:pointer;font-size:.88rem}
+.btns button:hover:not(:disabled){border-color:var(--ac);color:var(--ac)}
+.btns button:disabled{opacity:.5;cursor:wait}
+
+/* footer */
+footer{text-align:center;padding:60px 20px 40px;border-top:1px solid var(--line)}
+.cta{display:inline-block;margin:18px 0 28px;padding:16px 34px;border-radius:99px;background:linear-gradient(135deg,var(--ac),#ea580c);color:#1a1205;font-weight:700;font-size:1.05rem;text-decoration:none;box-shadow:0 8px 30px rgba(245,165,36,.35);transition:transform .2s}
+.cta:hover{transform:translateY(-3px) scale(1.03)}
+.built{color:var(--mut);font-size:.85rem}
+
+/* =========================================
+   DESAIN TABEL SUPABASE (DISEMPURNAKAN)
+========================================= */
+.table-card {
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+  border: 1px solid var(--line);
+}
+
+/* Toolbar di atas tabel */
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #0f1620;
+  border-bottom: 1px solid var(--line);
+}
+
+.table-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--mut);
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 10px var(--ok);
+}
+
+.search-box {
+  position: relative;
+  min-width: 240px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #141c28;
+  color: var(--tx);
+  font-size: 0.85rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--ac);
+  box-shadow: 0 0 0 2px rgba(245, 165, 36, 0.2);
+}
+
+.search-box::before {
+  content: "🔍";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+/* Scroll area container */
+.tbl-scroll {
+  overflow-x: auto;
+  max-height: 520px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.tbl-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.tbl-scroll::-webkit-scrollbar-track {
+  background: #0b0f14;
+}
+
+.tbl-scroll::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 4px;
+}
+
+.tbl-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--mut);
+}
+
+/* Tabel styling */
+#places {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+}
+
+/* Sticky Header */
+#places thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #16202c;
+  color: var(--mut);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--line);
+  white-space: nowrap;
+}
+
+#places tbody tr {
+  transition: background-color 0.15s ease;
+  border-bottom: 1px solid var(--line);
+}
+
+#places tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#places tbody tr:hover {
+  background-color: rgba(245, 165, 36, 0.04);
+}
+
+#places td {
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(34, 48, 68, 0.6);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Kolom Nama & Alamat */
+.place-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 250px;
+}
+
+.place-title {
+  font-weight: 600;
+  color: #fff;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+.place-address {
+  font-size: 0.78rem;
+  color: var(--mut);
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Kolom Kategori (Chip) */
+.cat-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: rgba(245, 165, 36, 0.08);
+  border: 1px solid rgba(245, 165, 36, 0.25);
+  color: var(--ac);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Kolom Rating */
+.rating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(245, 165, 36, 0.12);
+  color: #ffc107;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Kolom Review */
+.review-num {
+  font-weight: 600;
+  color: var(--tx);
+}
+
+.review-sub {
+  font-size: 0.75rem;
+  color: var(--mut);
+  margin-left: 2px;
+}
+
+/* Kolom Kota */
+.city-text {
+  color: #c5d1df;
+  font-size: 0.85rem;
+}
+
+/* Kolom Telepon */
+.phone-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--mut);
+  text-decoration: none;
+  font-size: 0.82rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #141c28;
+  border: 1px solid var(--line);
+  transition: all 0.2s;
+}
+
+.phone-btn:hover {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+/* Tombol Aksi Maps */
+.btn-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: #162232;
+  border: 1px solid var(--line);
+  color: var(--ac);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-map:hover {
+  background: var(--ac);
+  color: #121923;
+  border-color: var(--ac);
+  box-shadow: 0 0 12px rgba(245, 165, 36, 0.35);
+  transform: translateY(-1px);
+}
+
+/* State Loading & Kosong */
+.tbl-status {
+  text-align: center;
+  padding: 36px 16px;
+  color: var(--mut);
+}
+
+.tbl-status .spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(245,165,36,0.2);
+  border-top-color: var(--ac);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media(max-width:720px){
+  .two,.three{grid-template-columns:1fr}
+  .hero{padding-top:48px}
+  .table-toolbar{flex-direction:column;align-items:stretch}
+  .search-box{min-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="avatar">🤖</div>
+  <h1>Agent <span>Mozaic</span></h1>
+  <p class="owner">Karyawan Digital CV. Jenius Kreatifindo</p>
+  <div class="badge">🟢 Status: Active &amp; Ready 24/7</div>
+  <p class="tag">Mengurus tagihan dari PO masuk sampai siap dikirim ke klien, sehingga pemilik usaha cukup menandatangani dan menyetujui.</p>
+</section>
+
+<!-- 2. PROBLEM & SOLUTION -->
+<section>
+  <h2>Dari Kacau Menjadi Terkendali</h2>
+  <p class="sub">Satu orkestrator ringan memecah tiap tagihan ke subagen terpisah.</p>
+  <div class="two">
+    <div class="card chaos">
+      <h3>😵 The Chaos</h3>
+      <ul>
+        <li>PO menumpuk di email, dan invoice, kwitansi, Surat Jalan, BAST serta faktur pajak dibuat manual satu per satu.</li>
+        <li>Aturan tiap klien berbeda (PPh, termin, lampiran), sehingga mudah salah dan harus dicek ulang.</li>
+        <li>Klien sering membayar lumpsum beberapa PO sekaligus, jadi sulit dicocokkan ke invoice.</li>
+      </ul>
+    </div>
+    <div class="card solve">
+      <h3>✨ The Solution</h3>
+      <ul>
+        <li>Jadwal harian 10.30 WITA mencatat PO baru dan menyiapkan semua dokumen tagihan otomatis.</li>
+        <li>Aturan tiap klien tersimpan sebagai skill bersama dan dirujuk setiap kali tagihan dibuat.</li>
+        <li>Bukti transfer dicocokkan ke satu atau banyak invoice, lalu status Lunas atau Dibayar Sebagian dicatat.</li>
+        <li>Human-in-the-Loop: tagihan baru dikirim setelah Ray mengetik "submit / kirim".</li>
+        <li>Rencana berikutnya: agen pencari customer untuk konten dan iklan <span class="soon">(segera)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3. CORE CAPABILITIES -->
+<section>
+  <h2>Kemampuan Utama</h2>
+  <p class="sub">Tiga pekerjaan inti yang berjalan di balik layar.</p>
+  <div class="three">
+    <div class="card cap">
+      <div class="ico">🧭</div>
+      <h3>Orkestrator Alur Tagihan</h3>
+      <p>Menjalankan agen PO, memecah tiap tagihan ke subagen, lalu melaporkan yang Siap Dikirim. Maksimal 5 tagihan per putaran.</p>
+      <span class="chip">Gmail</span><span class="chip">Google Sheets</span>
+    </div>
+    <div class="card cap">
+      <div class="ico">📄</div>
+      <h3>Dokumen Otomatis</h3>
+      <p>Invoice PDF, kwitansi, Surat Jalan &amp; BAST, XML faktur pajak Coretax, lalu diarsipkan rapi per klien di Drive.</p>
+      <span class="chip">Google Drive</span><span class="chip">Coretax DJP</span>
+    </div>
+    <div class="card cap">
+      <div class="ico">🛡️</div>
+      <h3>Human-in-the-Loop</h3>
+      <p>Pengajuan ke klien hanya jalan atas persetujuan di chat. Putaran terjadwal hanya melaporkan, tidak pernah mengirim.</p>
+      <span class="chip">Persetujuan Ray</span><span class="chip">Email &amp; Form</span>
+    </div>
+  </div>
+</section>
+
+<!-- 4. INTERACTIVE SIMULATION -->
+<section>
+  <h2>Coba Simulasinya</h2>
+  <p class="sub">Pilih skenario dan lihat bagaimana Agent Mozaic bekerja (data contoh).</p>
+  <div class="card chat">
+    <div class="bar">🟢 Agent Mozaic · online</div>
+    <div class="box" id="box"><p class="hint">Klik salah satu skenario di bawah 👇</p></div>
+    <div class="btns">
+      <button data-s="a">📥 Jalankan alur tagihan</button>
+      <button data-s="b">💸 Bukti transfer masuk</button>
+      <button data-s="c">✅ Submit / kirim</button>
+    </div>
+  </div>
+</section>
+
+<!-- DATA TEMPAT (Supabase) -->
+<section>
+  <h2>Data Tempat</h2>
+  <p class="sub">Eksplorasi tempat terverifikasi dari database Supabase.</p>
+  
+  <div class="card table-card">
+    <!-- Toolbar Tabel -->
+    <div class="table-toolbar">
+      <div class="table-stats">
+        <span class="status-indicator"></span>
+        <span id="places-count">Memuat database...</span>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Cari nama, kota, kategori..." oninput="handleSearch()">
+      </div>
+    </div>
+
+    <!-- Scrollable Table -->
+    <div class="tbl-scroll">
+      <table id="places">
+        <thead>
+          <tr>
+            <th style="min-width:200px">Nama Tempat</th>
+            <th>Kategori</th>
+            <th>Rating</th>
+            <th>Review</th>
+            <th>Kota</th>
+            <th>Kontak</th>
+            <th style="text-align:center">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="placesBody">
+          <tr>
+            <td colspan="7" class="tbl-status">
+              <div class="spinner"></div>
+              <div>Menghubungkan ke Supabase...</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FOOTER & CTA -->
+<footer>
+  <h2>Tertarik dengan karyawan digital untuk usaha Anda?</h2>
+  <a class="cta" href="https://wa.me/628194228800?text=Halo%20Ray%2C%20saya%20tertarik%20dengan%20Agent%20Mozaic" target="_blank" rel="noopener">💬 Hubungi Ray via WhatsApp</a>
+  <p class="built">Built with AI · AI Builder Bootcamp Showcase</p>
+</footer>
+
+<script>
+const S={
+ a:{u:"Jalankan alur tagihan",r:[
+  "📥 agen-po: 3 PO baru dari Gmail sudah dicatat ke sheet Rekap PO Agent.",
+  "🧾 Subagen memproses tiap tagihan: invoice, kwitansi, Surat Jalan &amp; BAST, XML faktur pajak, lalu arsip ke Drive.",
+  "✅ 3 tagihan berstatus <b>Siap Dikirim</b>. Menunggu perintah \"submit / kirim\" dari Ray."]},
+ b:{u:"📎 Bukti transfer klien (sudah dibayar lumpsum)",r:[
+  "🔎 Bukti transfer dicocokkan ke 3 invoice yang masih terbuka.",
+  "💸 Hasil: 2 invoice <b>Lunas</b>, 1 invoice <b>Dibayar Sebagian</b>. Perintah bayar sudah dikirim ke Rekap PO Agent.",
+  "⚠️ Selisih pada invoice ketiga ditandai <b>Perlu Dicek</b> untuk Ray."]},
+ c:{u:"submit",r:[
+  "📨 Menyiapkan pengajuan: PDF digabung per PO dan kelengkapan dokumen sudah diperiksa.",
+  "✅ Disetujui. Form atau email tagihan ke klien terkirim, dan statusnya dicatat ke sheet.",
+  "🔒 Tanpa kata \"submit / kirim\" dari Ray, tidak ada tagihan yang keluar."]}
+};
+const box=document.getElementById("box"),btns=document.querySelectorAll(".btns button");
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function add(cls,html){const d=document.createElement("div");d.className="msg "+cls;d.innerHTML=html;box.appendChild(d);box.scrollTop=box.scrollHeight;return d}
+async function run(k){
+  btns.forEach(b=>b.disabled=true);
+  box.innerHTML="";
+  add("me",S[k].u);
+  await wait(500);
+  for(const text of S[k].r){
+    const t=add("ai typing","<span></span><span></span><span></span>");
+    await wait(1100);
+    t.classList.remove("typing");t.innerHTML=text;
+    box.scrollTop=box.scrollHeight;
+    await wait(350);
+  }
+  btns.forEach(b=>b.disabled=false);
+}
+btns.forEach(b=>b.addEventListener("click",()=>run(b.dataset.s)));
+</script>
+
+<script>
+  const SUPABASE_URL = 'https://bmksputrjevqomfukkxq.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_UpkGXqL7RpVNuO3mxefZrg_G9KtFduS';
+
+  let allPlaces = [];
+
+  function formatNumber(num) {
+    if (num == null) return '0';
+    return Number(num).toLocaleString('id-ID');
+  }
+
+  function renderTable(data) {
+    const tbody = document.getElementById('placesBody');
+    const countBadge = document.getElementById('places-count');
+
+    countBadge.textContent = `${data.length} Tempat Terdata`;
+
+    if (!data.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="tbl-status">
+            <div style="font-size: 1.5rem; margin-bottom: 6px;">🔍</div>
+            <div>Tidak ada data tempat yang cocok.</div>
+          </td>
+        </tr>`;
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+
+    data.forEach(p => {
+      const tr = document.createElement('tr');
+
+      // 1. Nama & Alamat
+      const tdTitle = document.createElement('td');
+      const infoBox = document.createElement('div');
+      infoBox.className = 'place-info';
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'place-title';
+      titleSpan.textContent = p.title || 'Tanpa Nama';
+      infoBox.appendChild(titleSpan);
+
+      if (p.street) {
+        const addrSpan = document.createElement('span');
+        addrSpan.className = 'place-address';
+        addrSpan.title = p.street;
+        addrSpan.textContent = p.street;
+        infoBox.appendChild(addrSpan);
+      }
+      tdTitle.appendChild(infoBox);
+      tr.appendChild(tdTitle);
+
+      // 2. Kategori
+      const tdCat = document.createElement('td');
+      if (p.category_name) {
+        const catChip = document.createElement('span');
+        catChip.className = 'cat-chip';
+        catChip.textContent = p.category_name;
+        tdCat.appendChild(catChip);
+      } else {
+        tdCat.textContent = '-';
+      }
+      tr.appendChild(tdCat);
+
+      // 3. Rating
+      const tdScore = document.createElement('td');
+      if (p.total_score != null) {
+        const scorePill = document.createElement('span');
+        scorePill.className = 'rating-pill';
+        scorePill.innerHTML = `★ ${Number(p.total_score).toFixed(1)}`;
+        tdScore.appendChild(scorePill);
+      } else {
+        tdScore.textContent = '-';
+      }
+      tr.appendChild(tdScore);
+
+      // 4. Review
+      const tdReviews = document.createElement('td');
+      if (p.reviews_count != null) {
+        tdReviews.innerHTML = `<span class="review-num">${formatNumber(p.reviews_count)}</span><span class="review-sub">ulasan</span>`;
+      } else {
+        tdReviews.textContent = '0';
+      }
+      tr.appendChild(tdReviews);
+
+      // 5. Kota
+      const tdCity = document.createElement('td');
+      tdCity.innerHTML = `<span class="city-text">${p.city || '-'}</span>`;
+      tr.appendChild(tdCity);
+
+      // 6. Telepon
+      const tdPhone = document.createElement('td');
+      if (p.phone) {
+        const cleanPhone = p.phone.replace(/[^0-9+]/g, '');
+        const phoneLink = document.createElement('a');
+        phoneLink.className = 'phone-btn';
+        phoneLink.href = `tel:${cleanPhone}`;
+        phoneLink.title = `Hubungi: ${p.phone}`;
+        phoneLink.innerHTML = `📞 ${p.phone}`;
+        tdPhone.appendChild(phoneLink);
+      } else {
+        tdPhone.innerHTML = '<span style="color:var(--mut)">-</span>';
+      }
+      tr.appendChild(tdPhone);
+
+      // 7. Aksi Maps
+      const tdAction = document.createElement('td');
+      tdAction.style.textAlign = 'center';
+      if (p.url && p.url.startsWith('https://')) {
+        const mapBtn = document.createElement('a');
+        mapBtn.className = 'btn-map';
+        mapBtn.href = p.url;
+        mapBtn.target = '_blank';
+        mapBtn.rel = 'noopener';
+        mapBtn.innerHTML = 'Maps ↗';
+        tdAction.appendChild(mapBtn);
+      } else {
+        tdAction.innerHTML = '<span style="color:var(--mut)">-</span>';
+      }
+      tr.appendChild(tdAction);
+
+      fragment.appendChild(tr);
+    });
+
+    tbody.replaceChildren(fragment);
+  }
+
+  function handleSearch() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    if (!query) {
+      renderTable(allPlaces);
+      return;
+    }
+    const filtered = allPlaces.filter(p => {
+      const title = (p.title || '').toLowerCase();
+      const cat = (p.category_name || '').toLowerCase();
+      const city = (p.city || '').toLowerCase();
+      const street = (p.street || '').toLowerCase();
+      return title.includes(query) || cat.includes(query) || city.includes(query) || street.includes(query);
+    });
+    renderTable(filtered);
+  }
+
+  async function loadPlaces() {
+    const tbody = document.getElementById('placesBody');
+    try {
+      const res = await fetch(
+        SUPABASE_URL + '/rest/v1/places?select=*&order=reviews_count.desc.nullslast&limit=100',
+        { headers: { apikey: SUPABASE_KEY } }
+      );
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      allPlaces = await res.json();
+      renderTable(allPlaces);
+    } catch (e) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="tbl-status" style="color:var(--bad)">
+            <div style="font-size: 1.5rem; margin-bottom: 6px;">⚠️</div>
+            <div>Gagal memuat data dari Supabase.</div>
+          </td>
+        </tr>`;
+      console.error(e);
+    }
+  }
+
+  loadPlaces();
+</script>
+</body>
+</html>
